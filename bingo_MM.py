@@ -28,9 +28,13 @@ winning_patterns = [
 
 ]
 
+false_statements = list(range(1,50, 2))
+truth_statements = list(range(2,50, 2))
+
 def create_set(winning_cards = 1):
     total_cards = winning_cards * 20
     losing_cards = total_cards - winning_cards
     return(losing_cards, winning_cards)
 
 print(create_set(5))
+print(winning_patterns[1])
