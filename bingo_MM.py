@@ -34,15 +34,6 @@ winning_patterns = [
 false_statements = list(range(1,100, 2))
 truth_statements = list(range(2,100, 2))
 
-def create_split(total_winning_cards = 1):
-    total_cards = total_winning_cards * 20 # there is a winner for every twenty cards
-    losing_cards = total_cards - total_winning_cards
-    return(losing_cards, total_winning_cards)
-
-winning_cards, losing_cards = create_split(total_winning_cards = 8)
-print(winning_cards)
-print(losing_cards)
-
 def create_winning_stack():
 
     winning_stack = []
@@ -58,3 +49,25 @@ def create_winning_stack():
 
         if card not in winning_stack:
             winning_stack.append(card)
+
+        return winning_stack
+
+def create_losing_stack():
+    losing_stack = []
+
+    while len(losing_stack) < losing_cards:
+
+        card = ["Blank"] * 25
+        
+        card[12] = "FREE"
+
+        if card not in losing_stack:
+            losing_stack.append(card)
+
+    return losing_stack
+
+# main function
+def create_set(total_winning_cards = 1):
+    total_cards = total_winning_cards * 20 # there is a winner for every twenty cards
+    losing_cards = total_cards - total_winning_cards
+    return(losing_cards, total_winning_cards)
