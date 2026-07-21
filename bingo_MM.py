@@ -34,11 +34,20 @@ winning_patterns = [
 false_statements = list(range(1,100, 2))
 truth_statements = list(range(2,100, 2))
 
+# main function
+def create_set(total_winning_cards = 1):
+    total_cards = total_winning_cards * 20 # there is a winner for every twenty cards
+    total_losing_cards = total_cards - total_winning_cards
+    return(total_losing_cards, total_winning_cards)
+
+total_losing_cards, total_winning_cards = create_set(1)
+print(f"Winning Cards: {total_winning_cards}, Losing Cards: {total_losing_cards}")
+
 def create_winning_stack():
 
     winning_stack = []
 
-    while len(winning_stack) < winning_cards:
+    while len(winning_stack) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
         print(select_random_pattern)
@@ -55,7 +64,7 @@ def create_winning_stack():
 def create_losing_stack():
     losing_stack = []
 
-    while len(losing_stack) < losing_cards:
+    while len(losing_stack) < total_losing_cards:
 
         card = ["Blank"] * 25
         
@@ -66,8 +75,3 @@ def create_losing_stack():
 
     return losing_stack
 
-# main function
-def create_set(total_winning_cards = 1):
-    total_cards = total_winning_cards * 20 # there is a winner for every twenty cards
-    losing_cards = total_cards - total_winning_cards
-    return(losing_cards, total_winning_cards)
