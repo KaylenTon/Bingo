@@ -53,14 +53,18 @@ def create_winning_stack():
         print(select_random_pattern)
 
         card = ["Blank"] * 25
-        card[12] = "FREE"
 
+        # Fill with true statements for the winning pattern
         for index in select_random_pattern:
             card[index] = random.choice(truth_statements)
 
+        # Fill with false statements for the rest of the card
         for index in range(25):
             if index not in select_random_pattern:
                 card[index] = random.choice(false_statements)
+
+        # Set the center space to "FREE" (Overwrite the value at index 12)
+        card[12] = "FREE"
 
         if card not in winning_stack:
             winning_stack.append(card)
