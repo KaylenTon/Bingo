@@ -53,15 +53,25 @@ def create_winning_stack():
         print(select_random_pattern)
 
         card = ["Blank"] * 25
-        
         card[12] = "FREE"
+
+        for index in select_random_pattern:
+            card[index] = random.choice(truth_statements)
+
+        for index in range(25):
+            if index not in select_random_pattern:
+                card[index] = random.choice(false_statements)
 
         if card not in winning_stack:
             winning_stack.append(card)
+            print(f"Winning Stack: {winning_stack}")
 
         return winning_stack
+    
+create_winning_stack()
 
 def create_losing_stack():
+
     losing_stack = []
 
     while len(losing_stack) < total_losing_cards:
@@ -74,4 +84,3 @@ def create_losing_stack():
             losing_stack.append(card)
 
     return losing_stack
-

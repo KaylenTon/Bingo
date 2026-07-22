@@ -37,5 +37,7 @@ columns = [
     "O1","O2","O3","O4","O5"
 ]
 
+print(stack)
+
 stack.columns = columns
 stack.to_csv("bingo_card_values.csv", index=False)
