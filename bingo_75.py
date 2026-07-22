@@ -5,6 +5,7 @@ def create_bingo_card(count = 1):
     stack = []
 
     while len(stack) < count:
+
         B = random.sample(range(1, 16), 5)
         I = random.sample(range(16, 31), 5)
         N = random.sample(range(31, 46), 5)
@@ -20,6 +21,7 @@ def create_bingo_card(count = 1):
         card.extend(O)
         card[12] = "FREE"
 
+        # Preventing duplicate cards
         if card not in stack:
             stack.append(card)
 
@@ -38,4 +40,6 @@ columns = [
 ]
 
 stack.columns = columns
+stack.index += 1
+print(stack)
 stack.to_csv("bingo_card_values.csv", index=False)

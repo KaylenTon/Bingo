@@ -40,17 +40,26 @@ def create_set(total_winning_cards = 1):
     total_losing_cards = total_cards - total_winning_cards
     return(total_losing_cards, total_winning_cards)
 
-total_losing_cards, total_winning_cards = create_set(1)
+total_losing_cards, total_winning_cards = create_set(8)
+print("\n")
 print(f"Winning Cards: {total_winning_cards}, Losing Cards: {total_losing_cards}")
+
+bingo_columns = [
+    "B1","B2","B3","B4","B5",
+    "I1","I2","I3","I4","I5",
+    "N1","N2","N3","N4","N5",
+    "G1","G2","G3","G4","G5",
+    "O1","O2","O3","O4","O5"
+]
 
 def create_winning_stack():
 
-    winning_stack = []
+    cards = []
 
-    while len(winning_stack) < total_winning_cards:
+    while len(cards) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
-        print(select_random_pattern)
+        print(f"\n Selected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
 
         card = ["Blank"] * 25
 
@@ -66,11 +75,15 @@ def create_winning_stack():
         # Set the center space to "FREE" (Overwrite the value at index 12)
         card[12] = "FREE"
 
-        if card not in winning_stack:
-            winning_stack.append(card)
-            print(f"Winning Stack: {winning_stack}")
+        # Preventing duplicate winning cards
+        if card not in cards:
+            cards.append(card)
 
-        return winning_stack
+    winning_stack = pd.DataFrame(cards, columns=bingo_columns)
+    winning_stack.index += 1
+    print(f"\n Winning Stack: \n{winning_stack}")
+
+    return winning_stack
     
 create_winning_stack()
 
@@ -88,3 +101,5 @@ def create_losing_stack():
             losing_stack.append(card)
 
     return losing_stack
+
+print("\n")
