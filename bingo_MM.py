@@ -89,17 +89,24 @@ create_winning_stack()
 
 def create_losing_stack():
 
-    losing_stack = []
+    cards = []
 
-    while len(losing_stack) < total_losing_cards:
+    while len(cards) < total_losing_cards:
 
         card = ["Blank"] * 25
-        
+
+        # Set the center space to "FREE" (Overwrite the value at index 12)
         card[12] = "FREE"
 
-        if card not in losing_stack:
-            losing_stack.append(card)
+        if card not in cards:
+            cards.append(card)
+
+    losing_stack = pd.DataFrame(cards, columns=bingo_columns)
+    losing_stack.index += 1
+    print(f"\n Losing Stack: \n{losing_stack}")
 
     return losing_stack
 
 print("\n")
+
+create_losing_stack()
