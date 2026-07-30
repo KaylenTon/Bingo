@@ -40,7 +40,7 @@ def create_set(total_winning_cards = 1):
     total_losing_cards = total_cards - total_winning_cards
     return(total_losing_cards, total_winning_cards)
 
-total_losing_cards, total_winning_cards = create_set(8)
+total_losing_cards, total_winning_cards = create_set(3)
 print("\n")
 print(f"Winning Cards: {total_winning_cards}, Losing Cards: {total_losing_cards}")
 
@@ -59,21 +59,38 @@ def create_winning_stack():
     while len(cards) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
-        print(f"\n Selected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
+        print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
 
         card = ["Blank"] * 25
 
         # Fill with true statements for the winning pattern
-        for index in select_random_pattern:
-            card[index] = random.choice(truth_statements)
+        pattern_truths = random.sample(truth_statements, len(select_random_pattern))
+        for index, value in zip(select_random_pattern, pattern_truths):
+            card[index] = value
 
         # Fill with false statements for the rest of the card
-        for index in range(25):
-            if index not in select_random_pattern:
-                card[index] = random.choice(false_statements)
+        remaining_indexes = [index for index in range(25) if index not in select_random_pattern]
+        remaining_falses = random.sample(false_statements, len(remaining_indexes))
+        for index, value in zip(remaining_indexes, remaining_falses):
+            card[index] = value
 
         # Set the center space to "FREE" (Overwrite the value at index 12)
         card[12] = "FREE"
+
+        remaining_indexes = [
+            i for i in range(25)
+            if i not in select_random_pattern
+            and i != 12
+        ]
+
+        extra_truth_count = random.randint(3,6)
+        extra_truth_indexes = random.sample(
+            remaining_indexes,
+            extra_truth_count
+        )
+        print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
+        for index, value in zip(extra_truth_indexes, random.sample(truth_statements, extra_truth_count)):
+            card[index] = value
 
         # Preventing duplicate winning cards
         if card not in cards:
@@ -108,5 +125,3 @@ def create_losing_stack():
     return losing_stack
 
 print("\n")
-
-create_losing_stack()
