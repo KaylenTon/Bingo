@@ -112,6 +112,26 @@ def create_losing_stack():
 
         card = ["Blank"] * 25
 
+        available_indexes = [
+            i for i in range(25)
+            if i != 12
+        ]
+
+        random_T_count = random.randint(5,15)
+
+        losing_card_truth_index = random.sample(
+            available_indexes,
+            random_T_count
+        )
+
+        for index,value in zip(losing_card_truth_index, random.sample(truth_statements, random_T_count)):
+            card[index] = value
+
+        remaining_indexes = [index for index in range(25) if index not in losing_card_truth_index]
+        remaining_falses = random.sample(false_statements, len(remaining_indexes))
+        for index, value in zip(remaining_indexes, remaining_falses):
+            card[index] = value
+        
         # Set the center space to "FREE" (Overwrite the value at index 12)
         card[12] = "FREE"
 
@@ -123,5 +143,7 @@ def create_losing_stack():
     print(f"\n Losing Stack: \n{losing_stack}")
 
     return losing_stack
+
+create_losing_stack()
 
 print("\n")
