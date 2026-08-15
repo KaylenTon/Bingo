@@ -2,7 +2,7 @@ import pandas as pd
 import random
 
 # Bingo Card Arrangement
-# ------------------------------------
+# -----------------------------
 # 00  01  02  03  04        B
 # 05  06  07  08  09        I
 # 10  11  12  13  14        N
@@ -36,13 +36,13 @@ truth_statements = list(range(2,100, 2))
 
 # main function
 def create_set(total_winning_cards = 1):
-    total_cards = total_winning_cards * 20 # there is a winner for every twenty cards
+    total_cards = total_winning_cards * 10 # there is a winner for every ten cards
     total_losing_cards = total_cards - total_winning_cards
-    return(total_losing_cards, total_winning_cards)
+    return(total_losing_cards, total_winning_cards, total_cards)
 
-total_losing_cards, total_winning_cards = create_set(3)
+total_losing_cards, total_winning_cards, total_cards = create_set(3)
 print("\n")
-print(f"Winning Cards: {total_winning_cards}, Losing Cards: {total_losing_cards}")
+print(f"Winning Cards: {total_winning_cards}, Losing Cards: {total_losing_cards}, Total Cards: {total_cards}")
 
 bingo_columns = [
     "B1","B2","B3","B4","B5",
@@ -147,3 +147,6 @@ def create_losing_stack():
 create_losing_stack()
 
 print("\n")
+
+card_ids = pd.DataFrame({"card_id": range(1, total_cards + 1)})
+print(card_ids)

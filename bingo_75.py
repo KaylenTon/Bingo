@@ -28,7 +28,7 @@ def create_bingo_card(count = 1):
     return stack
 
 # Enter the number of bingo cards you want to create. Default is 1 card.
-cards = create_bingo_card(5)
+cards = create_bingo_card(100)
 stack = pd.DataFrame(cards)
 print(stack.duplicated().sum())
 
