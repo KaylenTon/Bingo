@@ -101,6 +101,12 @@ def create_winning_stack(total_winning_cards):
 
     winning_stack = pd.DataFrame(cards, columns=bingo_columns)
     winning_stack.index += 1
+    winning_stack.insert(
+        0,
+        "Winner?",
+        "WINNER"
+    )
+    
     print(f"\n Winning Stack: \n{winning_stack}")
 
     return winning_stack
@@ -140,6 +146,11 @@ def create_losing_stack(total_losing_cards):
 
     losing_stack = pd.DataFrame(cards, columns=bingo_columns)
     losing_stack.index += 1
+    losing_stack.insert(
+            0,
+            "Winner?",
+            "LOSER"
+        )
     print(f"\n Losing Stack: \n{losing_stack}")
 
     return losing_stack
@@ -156,13 +167,15 @@ def create_set(total_winning_cards = 1, total_losing_cards = 10):
         ignore_index=True
     )
 
+    card_ids = random.sample(range(1, total_cards + 1), total_cards)
+
     all_cards.insert(
         0,
         "card_id",
-        range(1, len(all_cards) + 1)
+        card_ids
     )
 
-    print(all_cards)
+    print(f"\nAll Cards: \n{all_cards}")
     return(all_cards)
 
-create_set(2, 2)
+create_set(10, 10)
