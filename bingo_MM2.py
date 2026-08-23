@@ -63,7 +63,7 @@ def create_winning_stack(total_winning_cards):
     while len(cards) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
-        print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
+        # print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
 
         card = ["Blank"] * 25
 
@@ -92,7 +92,7 @@ def create_winning_stack(total_winning_cards):
             remaining_indexes,
             extra_truth_count
         )
-        print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
+        # print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
         for index, value in zip(extra_truth_indexes, random.sample(truth_statements, extra_truth_count)):
             card[index] = value
 
@@ -108,7 +108,7 @@ def create_winning_stack(total_winning_cards):
         "WINNER"
     )
     
-    print(f"\n Winning Stack: \n{winning_stack}")
+    # print(f"\n Winning Stack: \n{winning_stack}")
 
     return winning_stack
 def create_losing_stack(total_losing_cards):
@@ -152,7 +152,7 @@ def create_losing_stack(total_losing_cards):
             "Winner?",
             "LOSER"
         )
-    print(f"\n Losing Stack: \n{losing_stack}")
+    # print(f"\n Losing Stack: \n{losing_stack}")
 
     return losing_stack
 
@@ -179,4 +179,6 @@ def create_set(total_winning_cards = 1, total_losing_cards = 10):
     print(f"\nAll Cards: \n{all_cards}")
     return(all_cards)
 
-create_set(10, 10)
+# create_set(REPLACE_WITH_COUNT_OF_WINNING_CARDS, REPLACE_WITH_COUNT_OF_LOSING_CARDS)
+# Example usage:
+create_set(3, 7) # This will create a set of 3 winning cards and 7 losing cards, for a total of 10 cards.
