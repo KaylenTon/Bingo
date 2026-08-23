@@ -34,13 +34,6 @@ winning_patterns = [
 false_statements = list(range(1,100, 2))
 truth_statements = list(range(2,100, 2))
 
-def create_set(total_winning_cards = 1):
-
-    total_cards = total_winning_cards * 5 # there is a winner for every ten cards
-    total_losing_cards = total_cards - total_winning_cards
-
-    return(total_losing_cards, total_winning_cards, total_cards)
-
 bingo_columns = [
     "B1","B2","B3","B4","B5",
     "I1","I2","I3","I4","I5",
@@ -49,6 +42,19 @@ bingo_columns = [
     "O1","O2","O3","O4","O5"
 ]
 
+# VALIDATION FUNCTION
+def count_winning_patterns(card):
+
+    count = 0
+
+    for pattern in winning_patterns:
+        if all(card[index] in truth_statements or card[index] == "FREE"
+               for index in pattern):
+            count += 1
+
+    return count
+
+# CARD GENERATOR FUNCTIONS
 def create_winning_stack(total_winning_cards):
 
     cards = []
@@ -98,18 +104,6 @@ def create_winning_stack(total_winning_cards):
     print(f"\n Winning Stack: \n{winning_stack}")
 
     return winning_stack
-
-def count_winning_patterns(card):
-
-    count = 0
-
-    for pattern in winning_patterns:
-        if all(card[index] in truth_statements or card[index] == "FREE"
-               for index in pattern):
-            count += 1
-
-    return count
-
 def create_losing_stack(total_losing_cards):
 
     cards = []
@@ -150,9 +144,25 @@ def create_losing_stack(total_losing_cards):
 
     return losing_stack
 
-create_losing_stack()
+# MAIN FUNCTION (CREATES SET)
+def create_set(total_winning_cards = 1, total_losing_cards = 10):
 
-print("\n")
+    total_cards = total_winning_cards + total_losing_cards
+    winning_stack = create_winning_stack(total_winning_cards)
+    losing_stack = create_losing_stack(total_losing_cards)
 
-# card_ids = pd.DataFrame({"card_id": range(1, total_cards + 1)})
-# print(card_ids)
+    all_cards = pd.concat(
+        [winning_stack, losing_stack],
+        ignore_index=True
+    )
+
+    all_cards.insert(
+        0,
+        "card_id",
+        range(1, len(all_cards) + 1)
+    )
+
+    print(all_cards)
+    return(all_cards)
+
+create_set(2, 2)
