@@ -63,7 +63,7 @@ def create_winning_stack(total_winning_cards):
     while len(cards) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
-        # print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
+        print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
 
         card = ["Blank"] * 25
 
