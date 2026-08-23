@@ -31,7 +31,7 @@ winning_patterns = [
 
 ]
 
-# Using the "Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists
+# Using the "Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists. If your file goes by a different name, you will need to change the file name in the code below. The file should be in the same directory as this script as well.
 truth_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["TRUE"].dropna().tolist()
 false_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["FALSE"].dropna().tolist()
 
