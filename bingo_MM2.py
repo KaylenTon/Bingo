@@ -31,8 +31,9 @@ winning_patterns = [
 
 ]
 
-false_statements = list(range(1,100, 2))
-truth_statements = list(range(2,100, 2))
+# Using the "Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists
+truth_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["TRUE"].dropna().tolist()
+false_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["FALSE"].dropna().tolist()
 
 bingo_columns = [
     "B1","B2","B3","B4","B5",
