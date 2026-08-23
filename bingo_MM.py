@@ -180,5 +180,7 @@ def create_set(total_winning_cards = 1, total_losing_cards = 10):
     return(all_cards)
 
 # create_set(REPLACE_WITH_COUNT_OF_WINNING_CARDS, REPLACE_WITH_COUNT_OF_LOSING_CARDS)
+
 # Example usage:
-create_set(3, 7) # This will create a set of 3 winning cards and 7 losing cards, for a total of 10 cards.
+your_set = create_set(3, 7) # This will create a set of 3 winning cards and 7 losing cards, for a total of 10 cards. You can change these numbers out.
+your_set.to_csv("your_set.csv", index=False)
