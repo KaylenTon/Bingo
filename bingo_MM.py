@@ -31,15 +31,9 @@ winning_patterns = [
 
 ]
 
-false_statements = list(range(1,100, 2))
-truth_statements = list(range(2,100, 2))
-
-def create_set(total_winning_cards = 1):
-
-    total_cards = total_winning_cards * 5 # there is a winner for every ten cards
-    total_losing_cards = total_cards - total_winning_cards
-
-    return(total_losing_cards, total_winning_cards, total_cards)
+# Using the "Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists
+truth_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["TRUE"].dropna().tolist()
+false_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["FALSE"].dropna().tolist()
 
 bingo_columns = [
     "B1","B2","B3","B4","B5",
@@ -49,6 +43,19 @@ bingo_columns = [
     "O1","O2","O3","O4","O5"
 ]
 
+# VALIDATION FUNCTION
+def count_winning_patterns(card):
+
+    count = 0
+
+    for pattern in winning_patterns:
+        if all(card[index] in truth_statements or card[index] == "FREE"
+               for index in pattern):
+            count += 1
+
+    return count
+
+# CARD GENERATOR FUNCTIONS
 def create_winning_stack(total_winning_cards):
 
     cards = []
@@ -56,7 +63,7 @@ def create_winning_stack(total_winning_cards):
     while len(cards) < total_winning_cards:
 
         select_random_pattern = random.choice(winning_patterns)
-        print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
+        # print(f"\nSelected Winning Pattern {len(cards) + 1}: {select_random_pattern}")
 
         card = ["Blank"] * 25
 
@@ -85,7 +92,7 @@ def create_winning_stack(total_winning_cards):
             remaining_indexes,
             extra_truth_count
         )
-        print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
+        # print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
         for index, value in zip(extra_truth_indexes, random.sample(truth_statements, extra_truth_count)):
             card[index] = value
 
@@ -95,21 +102,15 @@ def create_winning_stack(total_winning_cards):
 
     winning_stack = pd.DataFrame(cards, columns=bingo_columns)
     winning_stack.index += 1
-    print(f"\n Winning Stack: \n{winning_stack}")
+    winning_stack.insert(
+        0,
+        "Winner?",
+        "WINNER"
+    )
+    
+    # print(f"\n Winning Stack: \n{winning_stack}")
 
     return winning_stack
-
-def count_winning_patterns(card):
-
-    count = 0
-
-    for pattern in winning_patterns:
-        if all(card[index] in truth_statements or card[index] == "FREE"
-               for index in pattern):
-            count += 1
-
-    return count
-
 def create_losing_stack(total_losing_cards):
 
     cards = []
@@ -146,13 +147,38 @@ def create_losing_stack(total_losing_cards):
 
     losing_stack = pd.DataFrame(cards, columns=bingo_columns)
     losing_stack.index += 1
-    print(f"\n Losing Stack: \n{losing_stack}")
+    losing_stack.insert(
+            0,
+            "Winner?",
+            "LOSER"
+        )
+    # print(f"\n Losing Stack: \n{losing_stack}")
 
     return losing_stack
 
-create_losing_stack()
+# MAIN FUNCTION (CREATES SET)
+def create_set(total_winning_cards = 1, total_losing_cards = 10):
 
-print("\n")
+    total_cards = total_winning_cards + total_losing_cards
+    winning_stack = create_winning_stack(total_winning_cards)
+    losing_stack = create_losing_stack(total_losing_cards)
 
-# card_ids = pd.DataFrame({"card_id": range(1, total_cards + 1)})
-# print(card_ids)
+    all_cards = pd.concat(
+        [winning_stack, losing_stack],
+        ignore_index=True
+    )
+
+    card_ids = random.sample(range(1, total_cards + 1), total_cards)
+
+    all_cards.insert(
+        0,
+        "card_id",
+        card_ids
+    )
+
+    print(f"\nAll Cards: \n{all_cards}")
+    return(all_cards)
+
+# create_set(REPLACE_WITH_COUNT_OF_WINNING_CARDS, REPLACE_WITH_COUNT_OF_LOSING_CARDS)
+# Example usage:
+create_set(3, 7) # This will create a set of 3 winning cards and 7 losing cards, for a total of 10 cards.
