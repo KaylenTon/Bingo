@@ -31,9 +31,10 @@ winning_patterns = [
 
 ]
 
-# Using the "Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists. If your file goes by a different name, you will need to change the file name in the code below. The file should be in the same directory as this script as well.
-truth_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["TRUE"].dropna().tolist()
-false_statements = pd.read_csv("Bingo Card - T_F Bank.csv")["FALSE"].dropna().tolist()
+# Using the "templates/Bingo Card - T_F Bank.csv" file, this code reads the TRUE and FALSE statements into lists. If your file goes by a different name or lives somewhere else, change the path in the code below. Run this script from the root of the repository.
+# drop_duplicates() removes repeated entries in the bank so the same statement can't land on a card twice.
+truth_statements = pd.read_csv("templates/Bingo Card - T_F Bank.csv")["TRUE"].dropna().drop_duplicates().tolist()
+false_statements = pd.read_csv("templates/Bingo Card - T_F Bank.csv")["FALSE"].dropna().drop_duplicates().tolist()
 
 bingo_columns = [
     "B1","B2","B3","B4","B5",
@@ -93,7 +94,9 @@ def create_winning_stack(total_winning_cards):
             extra_truth_count
         )
         # print(f"Extra Truth Count: {extra_truth_count}, Extra Truth Indexes: {extra_truth_indexes}")
-        for index, value in zip(extra_truth_indexes, random.sample(truth_statements, extra_truth_count)):
+        # Only draw from truths not already on the card, so no statement repeats
+        unused_truths = [t for t in truth_statements if t not in pattern_truths]
+        for index, value in zip(extra_truth_indexes, random.sample(unused_truths, extra_truth_count)):
             card[index] = value
 
         # Preventing duplicate winning cards
